@@ -1,0 +1,150 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": true
+    },
+    "extends": [
+        "airbnb"
+    ],
+    "rules": {
+        // indentation
+        "indent": ["error", 4, {"SwitchCase": 1}],
+        // The import warnings don't work with next.js
+        "import/no-unresolved": "off",
+        "import/extensions": ["error", "never"],
+
+        "no-underscore-dangle": "off",
+
+        // airbnb rules don't allow for..of, but I do
+        "no-restricted-syntax": "off",
+
+        // removed functions from comma-dangle, as it gets in the way of
+        // splitting long lines with a single param such as an aray filter() callback
+        "comma-dangle": ["error", {
+            "arrays": "always-multiline",
+            "objects": "always-multiline",
+            "imports": "always-multiline",
+            "exports": "always-multiline",
+            "functions": "only-multiline"
+        }],
+
+        // prefer not using default exports so tree shaking can work
+        "import/no-default-export": "off",
+        "import/prefer-default-export": "off",
+        // good rules, but make them warnings
+        "no-undef": "warn",
+        // turned off this because at this stage in the project it's useful
+        "no-unused-vars": "off",
+        // spacing
+        // "space-in-parens": [ 2, "always" ],
+        // "template-curly-spacing": [ 2, "always" ],
+        // "array-bracket-spacing": [ 2, "always" ],
+        // "computed-property-spacing": ["error", "always" ],
+        "object-curly-spacing": ["error", "never"],
+        "no-multiple-empty-lines": ["error", {"max": 1, "maxEOF": 0, "maxBOF": 0}],
+        // a little wider is fine - we're not on VT80s anymore
+        "max-len": ["warn",{"code": 120, "tabWidth": 4, "ignoreUrls": true}],
+        // use double-quotes for consistency with JSX and PHP
+        "quotes": ["error", "double", "avoid-escape"],
+        // code arrangement matter
+        "no-use-before-define": ["warn", {"functions": false}],
+        // make it meaningful
+        "prefer-const": "error",
+        // Makes defining types from props painful with typescript, so off it goes
+        "prefer-destructuring": "off",
+        // Prefer to always use braces, even if the function only returns immediately
+        // This prevents adding/removing them all the time as I refactor, plus it helps
+        // newcomers to ES6
+        "arrow-body-style": ["warn", "as-needed"],
+        // keep it simple
+        "complexity": ["warn", 5],
+
+        // this couples the API to its implementation (i.e. forces static)
+        "class-methods-use-this":"off"
+    },
+    "overrides": [
+        {
+            "files": ["*.js"],
+            "rules": {},
+            "parserOptions": {
+                "ecmaVersion": 2020,
+                "sourceType": "module"
+            }
+        },
+        {
+            "files": ["*.ts", "*.tsx"],
+            "extends": [
+                "plugin:@typescript-eslint/recommended",
+                "plugin:react/recommended",
+                "plugin:@typescript-eslint/eslint-recommended"
+            ],
+            "globals": {
+                "Atomics": "readonly",
+                "SharedArrayBuffer": "readonly",
+                "React": "writable"
+            },
+            "parser": "@typescript-eslint/parser",
+            "parserOptions": {
+                "ecmaFeatures": {
+                    "jsx": true
+                },
+                "ecmaVersion": 2020,
+                "sourceType": "module"
+            },
+            "plugins": [
+                "react",
+                "@typescript-eslint"
+            ],
+            "rules": {
+                // react
+                "react/prefer-es6-class": "off",
+                "react/jsx-filename-extension": "off",
+                "react/jsx-indent": ["warn", 4],
+                "react/jsx-props-no-spreading": "off",
+                "react/jsx-indent-props": "off",
+                "react/react-in-jsx-scope": "off",
+                "react/require-default-props": "off",
+                "react/destructuring-assignment": "off",
+                "react/prop-types": "off",
+                "react/jsx-boolean-value": ["warn", "always"],
+                "react/jsx-one-expression-per-line": "off",
+                "jsx-a11y/anchor-is-valid": "off",
+                "jsx-a11y/click-events-have-key-events": "warn",
+                "react/jsx-props-no-multi-spaces": "warn",
+                "jsx-a11y/no-static-element-interactions": "warn",
+                "jsx-a11y/no-noninteractive-element-interactions": "warn",
+                "react/no-unescaped-entities": "warn",
+                "jsx-a11y/interactive-supports-focus": "warn",
+                "react/no-unused-prop-types": "warn",
+                "jsx-a11y/alt-text": "warn",
+                "@typescript-eslint/no-unused-vars": "off",
+                "@typescript-eslint/no-empty-interface": "off",
+                "@typescript-eslint/ban-ts-comment": "warn",
+                "@typescript-eslint/interface-name-prefix": "off",
+                "@typescript-eslint/no-explicit-any": "warn",
+                "@typescript-eslint/explicit-function-return-type": [
+                    "error",
+                    {
+                        "allowExpressions": true,
+                        "allowTypedFunctionExpressions": true
+                    }
+                ],
+                // htmlFor *or* nesting should be enough
+                // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/302
+                "jsx-a11y/label-has-associated-control": [ "warn", {
+                    "required": {
+                        "some": [ "nesting", "id"  ]
+                    }
+                }],
+                "jsx-a11y/control-has-associated-label": "warn",
+                "jsx-a11y/label-has-for": [ "error", {
+                    "required": {
+                        "some": [ "nesting", "id"  ]
+                    }
+                }],
+                "jsx-a11y/no-autofocus": "off"
+            }
+        }
+    ]
+}
